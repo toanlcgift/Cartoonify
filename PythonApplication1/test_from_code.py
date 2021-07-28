@@ -61,16 +61,22 @@ def transform(models, style, input, load_size=450, gpu=-1):
     return output_image
 
 def load_models():
+    styles = ["Hosoda", "Hayao", "Shinkai", "Paprika"]
     models = {}
-    model = Transformer()
-    f = open("Hosoda_net_G_float.pth", "r")
-    state = torch.load(f.buffer)
-    model.load_state_dict(state)
-    model.eval()
-    models["Hosoda"] = model
+    for style in styles:
+        model = Transformer()
+        f = open(f"{style}_net_G_float.pth", "r")
+        state = torch.load(f.buffer)
+        model.load_state_dict(state)
+        model.eval()
+        models["Hosoda"] = model
     return models
 
 fimage = open("4--24.jpg", "r")
+fimage2 = open("lawrence.jpg", "r")
 gpu = -1
 models = load_models()
-transform(models,"Hosoda",fimage.buffer, 450,-1)
+output = transform(models,"Hayao",fimage.buffer, 450,-1)
+output.save("output1.jpg")
+output2 = transform(models,"Hayao",fimage2.buffer, 450,-1)
+output2.save("output2.jpg")
