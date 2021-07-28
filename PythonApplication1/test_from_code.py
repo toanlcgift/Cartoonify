@@ -69,7 +69,7 @@ def load_models():
         state = torch.load(f.buffer)
         model.load_state_dict(state)
         model.eval()
-        models["Hosoda"] = model
+        models[style] = model
     return models
 
 fimage = open("4--24.jpg", "r")
